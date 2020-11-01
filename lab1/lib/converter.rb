@@ -17,6 +17,14 @@ class Converter
     ((value - 32) / 1.8 + K).round(2)
   end
 
+  def self.convert_kelvin_to_celsius(value)
+    (value - K).round(2)
+  end
+
+  def self.convert_kelvin_to_fahrenheit(value)
+    ((value - K) * 1.8 + 32).round(2)
+  end
+
   def self.convert_from_celsius(value, result_scale)
     case result_scale
     when KELVIN
@@ -35,6 +43,15 @@ class Converter
     end
   end
 
+  def self.convert_from_kelvin(value, result_scale)
+    case result_scale
+    when CELSIUS
+      convert_kelvin_to_celsius(value)
+    when FAHRENHEIT
+      convert_kelvin_to_fahrenheit(value)
+    end
+  end
+
   def self.convert(value, base_scale, result_scale)
     return value if base_scale == result_scale
 
@@ -43,6 +60,8 @@ class Converter
       convert_from_celsius(value, result_scale)
     when FAHRENHEIT
       convert_from_fahrenheit(value, result_scale)
+    when KELVIN
+      convert_from_kelvin(value, result_scale)
     end
   end
 end

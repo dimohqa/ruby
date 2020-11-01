@@ -17,5 +17,13 @@ RSpec.describe Converter do
     context 'convert fahrenheit to kelvin' do
       it { expect(Converter.convert(10.0, 'F', 'K')).to eq 260.93 }
     end
+
+    context 'convert kelvin from celsius' do
+      it { expect(Converter.convert(10.0, 'K', 'C')).to eq(-263.15) }
+    end
+
+    context 'convert kelvin from fahrenheit' do
+      it { expect(Converter.convert(10.0, 'K', 'F')).to eq(-441.67) }
+    end
   end
 end
