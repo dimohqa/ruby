@@ -1,20 +1,37 @@
 require './constants/degree'
 
 class Converter
-  def self.convert_to_k_from_c(value)
+  def self.convert_celsius_to_kelvin(value)
     (value + K).round(2)
   end
 
-  def self.convert_to_f_from_c(value)
+  def self.convert_celsius_to_fahrenheit(value)
     (value * 1.8 + 32).round(2)
   end
 
-  def self.convert_from_c(value, result_scale)
+  def self.convert_fahrenheit_to_celsius(value)
+    ((value - 32) / 1.8).round(2)
+  end
+
+  def self.convert_fahrenheit_to_kelvin(value)
+    ((value - 32) / 1.8 + K).round(2)
+  end
+
+  def self.convert_from_celsius(value, result_scale)
     case result_scale
     when KELVIN
-      convert_to_k_from_c(value)
+      convert_celsius_to_kelvin(value)
     when FAHRENHEIT
-      convert_to_f_from_c(value)
+      convert_celsius_to_fahrenheit(value)
+    end
+  end
+
+  def self.convert_from_fahrenheit(value, result_scale)
+    case result_scale
+    when CELSIUS
+      convert_fahrenheit_to_celsius(value)
+    when KELVIN
+      convert_fahrenheit_to_kelvin(value)
     end
   end
 
@@ -23,7 +40,9 @@ class Converter
 
     case base_scale
     when CELSIUS
-      convert_from_c(value, result_scale)
+      convert_from_celsius(value, result_scale)
+    when FAHRENHEIT
+      convert_from_fahrenheit(value, result_scale)
     end
   end
 end
