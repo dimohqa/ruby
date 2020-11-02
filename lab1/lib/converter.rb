@@ -1,4 +1,4 @@
-require './constants/degree'
+require './../constants/degree'
 
 class Converter
   def self.convert_celsius_to_kelvin(value)
