@@ -18,14 +18,14 @@ class Io
 
   def self.input_degree
     puts 'Enter degree: '
-    input = gets.chomp
+    degree = gets.chomp
 
-    if input.match(Regexp.new(/\d.\d+/)).nil?
+    if degree.match(Regexp.new(/\d.\d+/)).nil?
       puts 'insert the number'
       exit
     end
 
-    input.to_f
+    degree.to_f
   end
 
   def self.input_base_scale
