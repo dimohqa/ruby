@@ -1,5 +1,0 @@
-money 1000
-fun 10
-mana 100
-fatigue 100
-health 300

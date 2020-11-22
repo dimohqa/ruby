@@ -1,7 +1,7 @@
 class Valera
-  attr_accessor :fun, :mana, :fatigue, :health, :money
+  attr_accessor :fun, :mana, :fatigue, :health, :money, :death
 
-  def go_to_work
+  def work
     return unless @mana < 50 && @fatigue < 10
 
     @fun -= 5
@@ -10,13 +10,13 @@ class Valera
     @fatigue += 70
   end
 
-  def watch_nature
-    @fun += 1
-    @mana += 10
-    @fatigue += 10
+  def nature
+    @fun = @fun + 1
+    @mana = @mana + 10
+    @fatigue = @fatigue + 10
   end
 
-  def watch_serial_drink_vine
+  def vine_serial
     @fun += 1
     @mana += 30
     @fatigue += 10
@@ -24,7 +24,7 @@ class Valera
     @money -= 20
   end
 
-  def drink_with_marginals
+  def drink
     @fun = 5
     @health -= 80
     @mana += 90
@@ -32,7 +32,7 @@ class Valera
     @money -= 150
   end
 
-  def sing_in_metro
+  def sing
     @fun += 1
     @mana += 10
     @money += if @mana > 40 & @mana && 40 & @mana < 70
@@ -50,7 +50,7 @@ class Valera
     @fatigue -= 70
   end
 
-  def go_to_bar
+  def bar
     @fun += 1
     @mana += 60
     @fatigue += 40

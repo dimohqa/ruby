@@ -14,17 +14,17 @@ class App
     puts '1 - Начать новую игру'
     puts '2 - Продолжить игру'
     puts '3 - Посмотреть правила игры'
-    puts 'q - выйти из игры'
-    input_item_menu = gets.chomp
+    puts '4 - выйти из игры'
+    input_item_menu = gets.to_i
     case input_item_menu
-    when '1'
+    when 1
       @io_files.new_file
-    when '2'
-      @io_files.open_file(@valera)
+    when 2
+      @io_files.read_file(@valera)
       @game.start(@valera)
-    when '3'
+    when 3
       @io_files.print_regulations
-    when 'q'
+    when 4
       exit
     end
 
@@ -35,7 +35,7 @@ class App
     puts 'Добро пожаловать в игру!'
     loop do
       input_item_menu = main
-      break if input_item_menu == 'q'
+      break if input_item_menu == 4
     end
   end
 end

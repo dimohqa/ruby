@@ -1,28 +1,20 @@
-class IOFiles
-  def open_file(valera)
-    File.open("./../saves/#{filename_save_file}.txt", 'r').each do |line|
-      name_attribute = line.split[0]
-      value_attribute = line.split[1]
+require 'json'
 
-      case name_attribute
-      when 'money'
-        valera.money = value_attribute
-      when 'fun'
-        valera.fun = value_attribute
-      when 'mana'
-        valera.mana = value_attribute
-      when 'fatigue'
-        valera.fatigue = value_attribute
-      when 'health'
-        valera.health = value_attribute
-      else
-        puts 'Произошла ошибка при чтении файла игры.
-        Проверьте правильность введеных атрибутов'
-      end
-    end
+class IOFiles
+  def read_file(valera)
+    save_name = select_save
+    file = File.read("./../saves/#{save_name}.json")
+    stats = JSON.parse(file)
+
+    valera.health = stats['health']
+    valera.money = stats['money']
+    valera.fun = stats['fun']
+    valera.mana = stats['mana']
+    valera.fatigue = stats['fatigue']
+    valera.death = stats['death']
   end
 
-  def filename_save_file
+  def select_save
     puts 'Список сохраненных игр:'
     puts save_names
 
