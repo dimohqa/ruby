@@ -1,4 +1,6 @@
 require './valera'
+require './io_files'
+require 'colorize'
 
 class Game
   def enter_action(valera, action)
@@ -20,25 +22,12 @@ class Game
     end
   end
 
-  def print_regulations
-    puts 'Выберите следующее действие Валеры: '
-    puts '1 - Пойти на работу'
-    puts '2 - Созерцать природу'
-    puts '3 - Пить вино и смотреть сериал'
-    puts '4 - Сходить в бар'
-    puts '5 - Выпить с маргинальными личностями'
-    puts '6 - Петь в метро'
-    puts '7 - Спать'
-    puts '8 - Сохранить игру'
-    puts '9 - закончить игру'
-  end
-
   def select_regulation
     number_action = 0
     loop do
-      print_regulations
+      IOFiles.print_regulations
       number_action = gets.to_i
-      break if number_action > 0 && number_action < 10
+      break if number_action.positive? && number_action < 10
 
       puts 'Выберите число от 1 до 9!'
     end
