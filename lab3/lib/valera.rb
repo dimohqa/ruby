@@ -2,7 +2,10 @@ class Valera
   attr_accessor :fun, :mana, :fatigue, :health, :money, :death
 
   def work
-    return unless @mana < 50 && @fatigue < 10
+    if @mana < 50 && @fatigue < 10
+      puts 'Слишком много алкоголя и слишком мало усталости'
+      return
+    end
 
     @fun -= 5
     @mana -= 30
@@ -11,9 +14,9 @@ class Valera
   end
 
   def nature
-    @fun = @fun + 1
-    @mana = @mana + 10
-    @fatigue = @fatigue + 10
+    @fun += 1
+    @mana += 10
+    @fatigue += 10
   end
 
   def vine_serial

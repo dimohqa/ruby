@@ -1,12 +1,10 @@
 require './valera'
 
 class Game
-  def enter_action(valera)
-    print_stat(valera)
-    action = select_regulation
+  def enter_action(valera, action)
     case action
     when 1
-      puts valera.health
+      valera.work
     when 2
       valera.nature
     when 3
@@ -20,8 +18,6 @@ class Game
     when 7
       valera.sleep
     end
-
-    action
   end
 
   def print_regulations
@@ -60,8 +56,10 @@ class Game
   def start(valera)
     loop do
       puts `clear`
-      number_action = enter_action(valera)
-      break if number_action == 9
+      print_stat(valera)
+      action = select_regulation
+      enter_action(valera, action)
+      break if action == 9
     end
   end
 end
