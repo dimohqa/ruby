@@ -36,12 +36,6 @@ class App
       break if input_item_menu == 3
     end
   end
-
-  def print_regulations
-    File.open('./regulations.txt', 'r').each do |line|
-      puts line
-    end
-  end
 end
 
 app = App.new

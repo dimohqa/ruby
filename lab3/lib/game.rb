@@ -47,6 +47,16 @@ class Game
     puts "money: #{valera.money}"
   end
 
+  def print_regulations
+    File.open('./regulations.txt', 'r').each do |line|
+      if line[0] == '['
+        puts line.chop.red
+      else
+        puts line
+      end
+    end
+  end
+
   def start(valera)
     loop do
       puts `clear`
