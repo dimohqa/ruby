@@ -1,5 +1,4 @@
 require './valera'
-require './io_files'
 require 'colorize'
 
 class Game
@@ -22,10 +21,16 @@ class Game
     end
   end
 
+  def print_regulations
+    File.open('./regulations.txt', 'r').each do |line|
+      puts line
+    end
+  end
+
   def select_regulation
     number_action = 0
     loop do
-      IOFiles.print_regulations
+      print_regulations
       number_action = gets.to_i
       break if number_action.positive? && number_action < 10
 

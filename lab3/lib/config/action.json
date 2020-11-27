@@ -8,7 +8,7 @@
   "nature": {
     "fun": 1,
     "mana": -10,
-    "fatigure": 10
+    "fatigue": 10
   },
   "vine_serial": {
     "fun": -1,
