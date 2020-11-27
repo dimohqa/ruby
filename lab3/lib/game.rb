@@ -38,7 +38,7 @@ class Game
     loop do
       print_regulations
       number_action = gets.to_i
-      break if number_action > 0 && number_action < 10
+      break if number_action.positive? && number_action < 10
 
       puts 'Выберите число от 1 до 9!'
     end

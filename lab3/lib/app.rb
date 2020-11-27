@@ -1,12 +1,14 @@
-require './io_files'
 require './valera'
 require './game'
+require './output_save'
+require './input_save'
 
 class App
   def initialize
-    @io_files = IOFiles.new
     @valera = Valera.new
     @game = Game.new
+    @output_save = OutputSave.new
+    @input_save = InputSave.new
   end
 
   def main
@@ -18,12 +20,11 @@ class App
     input_item_menu = gets.to_i
     case input_item_menu
     when 1
-      @io_files.new_file
     when 2
-      @io_files.read_file(@valera)
+      @input_save.read(@valera)
       @game.start(@valera)
     when 3
-      @io_files.print_regulations
+      print_regulations
     when 4
       exit
     end
@@ -36,6 +37,12 @@ class App
     loop do
       input_item_menu = main
       break if input_item_menu == 4
+    end
+  end
+
+  def print_regulations
+    File.open('./regulations.txt', 'r').each do |line|
+      puts line
     end
   end
 end
