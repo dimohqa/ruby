@@ -1,5 +1,6 @@
 class Valera
   attr_accessor :state
+
   def initialize(state)
     @config = JSON.parse(File.read('./config/action.json'))
     @state = state
@@ -19,57 +20,77 @@ class Valera
       return
     end
 
-    @state['fun']  += @config['work']['fun']
-    @state['mana'] += @config['work']['mana']
-    @state['money'] += @config['work']['money']
-    @state['fatigue'] += @config['work']['fatigue']
+    change_fun(@config['work']['fun'])
+    change_mana(@config['work']['mana'])
+    change_money(@config['work']['money'])
+    change_fatigue(@config['work']['fatigue'])
   end
 
   def nature
-    @state['fun'] += @config['nature']['fun']
-    @state['mana'] += @config['nature']['mana']
-    @state['fatigue'] += @config['nature']['fatigue']
+    change_fun(@config['nature']['fun'])
+    change_mana(@config['nature']['mana'])
+    change_fatigue(@config['nature']['fatigue'])
   end
 
   def vine_serial
-    @state['fun'] += @config['vine_serial']['fun']
-    @state['mana'] += @config['vine_serial']['mana']
-    @state['fatigue'] += @config['vine_serial']['fatigue']
-    @state['health'] += @config['vine_serial']['health']
-    @state['money'] += @config['vine_serial']['money']
+    change_fun(@config['vine_serial']['fun'])
+    change_mana(@config['vine_serial']['mana'])
+    change_fatigue(@config['vine_serial']['fatigue'])
+    change_health(@config['vine_serial']['health'])
+    change_money(@config['vine_serial']['money'])
   end
 
   def drink
-    @state['fun']+= @config['drink']['fun']
-    @state['health'] += @config['drink']['health']
-    @state['mana'] += @config['drink']['mana']
-    @state['fatigue'] += @config['drink']['fatigue']
-    @state['money'] += @config['drink']['money']
+    change_fun(@config['drink']['fun'])
+    change_health(@config['drink']['health'])
+    change_mana(@config['drink']['mana'])
+    change_fatigue(@config['drink']['fatigue'])
+    change_money(@config['drink']['money'])
   end
 
   def song
-    @state['fun'] += @config['song']['fun']
-    @state['mana']+= @config['song']['mana']
-    @state['money'] += if @state['mana'] > 40 & @state['mana'] && 40 & @state['mana'] < 70
-                60
-              else
-                10
-              end
-    @state['fatigue'] += @config['song']['fatigue']
+    change_fun(@config['song']['fun'])
+    change_mana(@config['song']['mana'])
+    if @state['mana'] > 40 && @state['mana'] < 70
+      change_money(60)
+    else
+      change_money(10)
+    end
+    change_fatigue(@config['song']['fatigue'])
   end
 
   def sleep
-    @state['health'] += @config['sleep']['health'] if @state['mana'] < 30
-    @state['fun'] += @config['sleep']['fun'] if @state['mana'] > 70
-    @state['mana'] += @config['sleep']['mana']
-    @state['fatigue'] += @config['sleep']['fatigue']
+    change_health(@config['sleep']['health']) if @state['mana'] < 30
+    change_fun(@config['sleep']['fun']) if @state['mana'] > 70
+    change_mana(@config['sleep']['mana'])
+    change_fatigue(@config['sleep']['fatigue'])
   end
 
   def bar
-    @state['fun'] += @config['bar']['fun']
-    @state['mana'] += @config['bar']['mana']
-    @state['fatigue'] += @config['bar']['fatigue']
-    @state['health'] += @config['bar']['health']
-    @state['money'] += @config['bar']['money']
+    change_fun(@config['bar']['fun'])
+    change_mana(@config['bar']['mana'])
+    change_fatigue(@config['bar']['fatigue'])
+    change_health(@config['bar']['health'])
+    change_money(@config['bar']['money'])
+  end
+
+  def change_mana(step)
+    @state['mana'] += step
+  end
+
+  def change_fun(step)
+    @state['fun'] += step
+  end
+
+  def change_health(step)
+    @state['health'] += step
+  end
+
+  def change_fatigue(step)
+    @state['fatigue'] += step
+  end
+
+  def change_money(step)
+    @state['money'] += step
   end
 end

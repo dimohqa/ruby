@@ -24,7 +24,7 @@ class App
     when 1
 
     when 2
-      valera = @input_save.read()
+      valera = @input_save.read
       @game.start(valera)
     when 3
       exit

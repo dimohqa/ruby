@@ -1,13 +1,11 @@
 require './valera'
 
 class InputSave
-  def read()
+  def read
     save_name = select_save
     file = File.read("./../saves/#{save_name}.json")
     stats = JSON.parse(file)
-    valera = Valera.new(stats)
-
-    valera
+    Valera.new(stats)
   end
 
   def init_valera(stats, valera)
