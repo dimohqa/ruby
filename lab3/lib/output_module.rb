@@ -2,8 +2,6 @@ require 'colorize'
 
 module Output
   def print_menu
-    system('cls')
-    system('clear')
     puts 'Меню:'
     puts '1 - Начать новую игру'
     puts '2 - Продолжить игру'
@@ -17,8 +15,6 @@ module Output
   end
 
   def print_regulations
-    system('cls')
-    system('clear')
     File.open('./regulations.txt', 'r').each do |line|
       if line[0] == '['
         puts line.chop.red
@@ -33,8 +29,6 @@ module Output
   end
 
   def print_stats(stats)
-    system('cls')
-    system('clear')
     puts "health: #{stats['health']}"
     puts "fun: #{stats['fun']}"
     puts "fatigue: #{stats['fatigue']}"
@@ -43,7 +37,9 @@ module Output
   end
 
   def print_work_error
-    puts 'Слишком много алкоголя и слишком мало усталости'
+    system('cls')
+    system('clear')
+    puts 'Слишком много алкоголя или усталости, чтобы работать'
   end
 
   def clear_screen

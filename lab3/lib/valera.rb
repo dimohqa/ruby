@@ -3,15 +3,16 @@ require './output_module'
 class Valera
   include Output
 
-  attr_accessor :state
+  attr_accessor :state, :boundaries
 
   def initialize(state)
     @config = JSON.parse(File.read('./config/action.json'))
+    @boundaries = JSON.parse(File.read('./config/boundaries.json'))
     @state = state
   end
 
   def work
-    if @state['mana'] < 50 && @state['fatigue'] < 10
+    if @state['mana'] >= 50 || @state['fatigue'] >= 10
       print_work_error
       return
     end
@@ -70,20 +71,29 @@ class Valera
     change_money(@config['bar']['money'])
   end
 
+  def reference_values(value)
+    @state[value] = @boundaries[value]['min'] if @state[value] < @boundaries[value]['min']
+    @state[value] = @boundaries[value]['max'] if @state[value] > @boundaries[value]['max']
+  end
+
   def change_mana(step)
     @state['mana'] += step
+    reference_values('mana')
   end
 
   def change_fun(step)
     @state['fun'] += step
+    reference_values('fun')
   end
 
   def change_health(step)
     @state['health'] += step
+    reference_values('health')
   end
 
   def change_fatigue(step)
     @state['fatigue'] += step
+    reference_values('fatigue')
   end
 
   def change_money(step)

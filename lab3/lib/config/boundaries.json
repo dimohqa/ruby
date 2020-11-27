@@ -1,0 +1,18 @@
+{
+  "health": {
+    "min": 0,
+    "max": 100
+  },
+  "mana": {
+    "min": 0,
+    "max": 100
+  },
+  "fun": {
+    "min": -10,
+    "max": 10
+  },
+  "fatigue": {
+    "min": 0,
+    "max": 100
+  }
+}
