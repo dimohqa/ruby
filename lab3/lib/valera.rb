@@ -1,4 +1,8 @@
+require './output_module'
+
 class Valera
+  include Output
+
   attr_accessor :state
 
   def initialize(state)
@@ -6,17 +10,9 @@ class Valera
     @state = state
   end
 
-  def print_stat
-    puts "health: #{@state['health']}"
-    puts "fun: #{@state['fun']}"
-    puts "fatigue: #{@state['fatigue']}"
-    puts "mana: #{@state['mana']}"
-    puts "money: #{@state['money']}"
-  end
-
   def work
     if @state['mana'] < 50 && @state['fatigue'] < 10
-      puts 'Слишком много алкоголя и слишком мало усталости'
+      print_work_error
       return
     end
 
