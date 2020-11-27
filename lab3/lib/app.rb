@@ -15,8 +15,7 @@ class App
     puts 'Меню:'
     puts '1 - Начать новую игру'
     puts '2 - Продолжить игру'
-    puts '3 - Посмотреть правила игры'
-    puts '4 - выйти из игры'
+    puts '3 - выйти из игры'
     input_item_menu = gets.to_i
     case input_item_menu
     when 1
@@ -24,8 +23,6 @@ class App
       @input_save.read(@valera)
       @game.start(@valera)
     when 3
-      print_regulations
-    when 4
       exit
     end
 
@@ -36,7 +33,7 @@ class App
     puts 'Добро пожаловать в игру!'
     loop do
       input_item_menu = main
-      break if input_item_menu == 4
+      break if input_item_menu == 3
     end
   end
 

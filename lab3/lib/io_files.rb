@@ -48,9 +48,13 @@ class IOFiles
     end
   end
 
-  def print_regulations
+  def self.print_regulations
     File.open('./regulations.txt', 'r').each do |line|
-      puts line
+      if line[0] == '['
+        puts line.chop.red
+      else
+        puts line
+      end
     end
   end
 end
