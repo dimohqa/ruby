@@ -1,67 +1,75 @@
 class Valera
-  attr_accessor :fun, :mana, :fatigue, :health, :money, :death
-
-  def initialize
+  attr_accessor :state
+  def initialize(state)
     @config = JSON.parse(File.read('./config/action.json'))
+    @state = state
+  end
+
+  def print_stat
+    puts "health: #{@state['health']}"
+    puts "fun: #{@state['fun']}"
+    puts "fatigue: #{@state['fatigue']}"
+    puts "mana: #{@state['mana']}"
+    puts "money: #{@state['money']}"
   end
 
   def work
-    if @mana < 50 && @fatigue < 10
+    if @state['mana'] < 50 && @state['fatigue'] < 10
       puts 'Слишком много алкоголя и слишком мало усталости'
       return
     end
 
-    @fun += @config['work']['fun']
-    @mana += @config['work']['mana']
-    @money += @config['work']['money']
-    @fatigue += @config['work']['fatigue']
+    @state['fun']  += @config['work']['fun']
+    @state['mana'] += @config['work']['mana']
+    @state['money'] += @config['work']['money']
+    @state['fatigue'] += @config['work']['fatigue']
   end
 
   def nature
-    @fun += @config['nature']['fun']
-    @mana += @config['nature']['mana']
-    @fatigue += @config['nature']['fatigue']
+    @state['fun'] += @config['nature']['fun']
+    @state['mana'] += @config['nature']['mana']
+    @state['fatigue'] += @config['nature']['fatigue']
   end
 
   def vine_serial
-    @fun += @config['vine_serial']['fun']
-    @mana += @config['vine_serial']['mana']
-    @fatigue += @config['vine_serial']['fatigue']
-    @health += @config['vine_serial']['health']
-    @money += @config['vine_serial']['money']
+    @state['fun'] += @config['vine_serial']['fun']
+    @state['mana'] += @config['vine_serial']['mana']
+    @state['fatigue'] += @config['vine_serial']['fatigue']
+    @state['health'] += @config['vine_serial']['health']
+    @state['money'] += @config['vine_serial']['money']
   end
 
   def drink
-    @fun += @config['drink']['fun']
-    @health += @config['drink']['health']
-    @mana += @config['drink']['mana']
-    @fatigue += @config['drink']['fatigue']
-    @money += @config['drink']['money']
+    @state['fun']+= @config['drink']['fun']
+    @state['health'] += @config['drink']['health']
+    @state['mana'] += @config['drink']['mana']
+    @state['fatigue'] += @config['drink']['fatigue']
+    @state['money'] += @config['drink']['money']
   end
 
-  def sing
-    @fun += @config['sing']['fun']
-    @mana += @config['sing']['mana']
-    @money += if @mana > 40 & @mana && 40 & @mana < 70
+  def song
+    @state['fun'] += @config['song']['fun']
+    @state['mana']+= @config['song']['mana']
+    @state['money'] += if @state['mana'] > 40 & @state['mana'] && 40 & @state['mana'] < 70
                 60
               else
                 10
               end
-    @fatigue += @config['sing']['fatigue']
+    @state['fatigue'] += @config['song']['fatigue']
   end
 
   def sleep
-    @health += @config['sleep']['health'] if @mana < 30
-    @fun += @config['sleep']['fun'] if @mana > 70
-    @mana += @config['sleep']['mana']
-    @fatigue += @config['sleep']['fatigue']
+    @state['health'] += @config['sleep']['health'] if @state['mana'] < 30
+    @state['fun'] += @config['sleep']['fun'] if @state['mana'] > 70
+    @state['mana'] += @config['sleep']['mana']
+    @state['fatigue'] += @config['sleep']['fatigue']
   end
 
   def bar
-    @fun += @config['bar']['fun']
-    @mana += @config['bar']['mana']
-    @fatigue += @config['bar']['fatigue']
-    @health += @config['bar']['health']
-    @money += @config['bar']['money']
+    @state['fun'] += @config['bar']['fun']
+    @state['mana'] += @config['bar']['mana']
+    @state['fatigue'] += @config['bar']['fatigue']
+    @state['health'] += @config['bar']['health']
+    @state['money'] += @config['bar']['money']
   end
 end

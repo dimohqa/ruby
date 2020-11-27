@@ -5,23 +5,27 @@ require './input_save'
 
 class App
   def initialize
-    @valera = Valera.new
     @game = Game.new
     @output_save = OutputSave.new
     @input_save = InputSave.new
   end
 
-  def main
+  def print_menu
     puts 'Меню:'
     puts '1 - Начать новую игру'
     puts '2 - Продолжить игру'
     puts '3 - выйти из игры'
+  end
+
+  def main
+    print_menu
     input_item_menu = gets.to_i
     case input_item_menu
     when 1
+
     when 2
-      @input_save.read(@valera)
-      @game.start(@valera)
+      valera = @input_save.read()
+      @game.start(valera)
     when 3
       exit
     end

@@ -15,7 +15,7 @@ class Game
     when 5
       valera.drink
     when 6
-      valera.sing
+      valera.song
     when 7
       valera.sleep
     end
@@ -39,14 +39,6 @@ class Game
     number_action
   end
 
-  def print_stat(valera)
-    puts "health: #{valera.health}"
-    puts "fun: #{valera.fun}"
-    puts "fatigue: #{valera.fatigue}"
-    puts "mana: #{valera.mana}"
-    puts "money: #{valera.money}"
-  end
-
   def print_regulations
     File.open('./regulations.txt', 'r').each do |line|
       if line[0] == '['
@@ -60,7 +52,7 @@ class Game
   def start(valera)
     loop do
       puts `clear`
-      print_stat(valera)
+      valera.print_stat
       action = select_regulation
       enter_action(valera, action)
       break if action == 9
