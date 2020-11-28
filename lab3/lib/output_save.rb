@@ -1,16 +1,9 @@
 require 'json'
 
 class OutputSave
-  def save(valera)
-    stats = {
-      money: valera.money,
-      fun: valera.fun,
-      mana: valera.mana,
-      fatigue: valera.fatigue,
-      health: valera.health
-    }
+  def save(stat)
     File.open("./../saves/#{save_name}.json", 'w') do |f|
-      f.write(JSON.pretty_generate(stats))
+      f.write(JSON.pretty_generate(stat))
     end
   end
 

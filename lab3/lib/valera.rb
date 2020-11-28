@@ -6,6 +6,10 @@ class Valera
     @state = state
   end
 
+  def stat
+    @state
+  end
+
   def print_stat
     puts "health: #{@state['health']}"
     puts "fun: #{@state['fun']}"
