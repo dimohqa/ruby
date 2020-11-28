@@ -1,0 +1,8 @@
+{
+  "health": 85,
+  "mana": 90,
+  "fun": -1,
+  "money": 90,
+  "fatigue": 100,
+  "death": false
+}

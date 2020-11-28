@@ -18,7 +18,7 @@ class Valera
 
   def work
     if @state['mana'] >= 50 || @state['fatigue'] >= 10
-      print_work_error
+      set_work_error
       return
     end
 
@@ -84,7 +84,7 @@ class Valera
 
   def enough_money?(cost)
     if @state['money'] <= -cost
-      print_money_error
+      set_money_error
       false
     else
       true

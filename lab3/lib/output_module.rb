@@ -1,8 +1,11 @@
 require 'colorize'
+require './string_constant'
 
 module Output
-  @@welcome = false
-  @@error = false
+  def initialize
+    @@welcome = false
+    @@message = VOID_MESSAGE
+  end
 
   def print_menu
     clear_screen unless @@welcome
@@ -34,8 +37,6 @@ module Output
   end
 
   def print_stats(stats)
-    clear_screen unless @@error
-    @@error = false
     puts "health: #{stats['health']}"
     puts "fun: #{stats['fun']}"
     puts "fatigue: #{stats['fatigue']}"
@@ -43,20 +44,31 @@ module Output
     puts "money: #{stats['money']}"
   end
 
-  def print_work_error
-    clear_screen
-    puts 'Слишком много алкоголя или усталости, чтобы работать'.red
-    @@error = true
+  def set_void_message
+    @@message = VOID_MESSAGE
   end
 
-  def print_money_error
-    clear_screen
-    puts 'Недостаточно денег для выполнения действия'.red
-    @@error = true
+  def set_work_error
+    @@message = WORK_ERROR
   end
 
-  def print_death_message
-    puts 'Ваш персонаж погиб, нажмите любую клавишу для продолжения...'.red
+  def set_money_error
+    @@message = MONEY_ERROR
+  end
+
+  def set_death_message
+    @@message = DEATH_MESSAGE
+  end
+
+  def print_message
+    clear_screen
+    puts @@message.red
+    set_void_message
+  end
+
+  def print_cap(stats)
+    print_message
+    print_stats(stats)
   end
 
   def clear_screen

@@ -38,10 +38,11 @@ class Game
 
   def start(valera, save_name)
     loop do
-      print_stats(valera.state)
+      print_cap(valera.state)
       valera.death?
       if valera.state['death'] == true
-        print_death_message
+        set_death_message
+        print_cap(valera.state)
         gets
         break
       else
