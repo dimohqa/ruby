@@ -71,6 +71,8 @@ class Valera
     change_money(@config['bar']['money'])
   end
 
+  private
+
   def reference_values(value)
     @state[value] = @boundaries[value]['min'] if @state[value] < @boundaries[value]['min']
     @state[value] = @boundaries[value]['max'] if @state[value] > @boundaries[value]['max']
