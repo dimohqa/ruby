@@ -9,8 +9,6 @@ class App
 
   def initialize
     @game = Game.new
-    @output_save = OutputSave.new
-    @input_save = InputSave.new
   end
 
   def main
@@ -18,12 +16,13 @@ class App
     input_item_menu = gets.to_i
     case input_item_menu
     when 1
-      valera = @input_save.initial_config
-      @output_save.save(valera.stat)
-      @game.start(valera)
+      valera = InputSave.initial_config
+      save_name = OutputSave.enter_save_name
+      @game.start(valera, save_name)
     when 2
-      valera = @input_save.read
-      @game.start(valera)
+      save_name = InputSave.select_save
+      valera = InputSave.read(save_name)
+      @game.start(valera, save_name)
     when 3
       clear_screen
       exit
