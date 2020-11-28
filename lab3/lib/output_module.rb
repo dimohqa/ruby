@@ -1,7 +1,13 @@
 require 'colorize'
 
 module Output
+
+  @@welcome = false
+  @@error = false
+
   def print_menu
+    clear_screen unless @@welcome
+    @@welcome = false
     puts 'Меню:'
     puts '1 - Начать новую игру'
     puts '2 - Продолжить игру'
@@ -9,9 +15,9 @@ module Output
   end
 
   def print_welcome
-    system('cls')
-    system('clear')
+    clear_screen
     puts 'Добро пожаловать в игру!'
+    @@welcome = true
   end
 
   def print_regulations
@@ -29,6 +35,8 @@ module Output
   end
 
   def print_stats(stats)
+    clear_screen unless @@error
+    @@error = false
     puts "health: #{stats['health']}"
     puts "fun: #{stats['fun']}"
     puts "fatigue: #{stats['fatigue']}"
@@ -37,9 +45,9 @@ module Output
   end
 
   def print_work_error
-    system('cls')
-    system('clear')
+    clear_screen
     puts 'Слишком много алкоголя или усталости, чтобы работать'
+    @@error = true
   end
 
   def clear_screen
