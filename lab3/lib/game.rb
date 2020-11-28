@@ -39,9 +39,16 @@ class Game
   def start(valera, save_name)
     loop do
       print_stats(valera.state)
-      action = select_regulation
-      enter_action(valera, action)
-      OutputSave.save(valera.stat, save_name)
+      valera.death?
+      if valera.state['death'] == true
+        print_death_message
+        gets
+        break
+      else
+        OutputSave.save(valera.stat, save_name)
+        action = select_regulation
+        enter_action(valera, action)
+      end
       break if action == 9
     end
   end

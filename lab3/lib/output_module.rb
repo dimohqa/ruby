@@ -1,7 +1,6 @@
 require 'colorize'
 
 module Output
-
   @@welcome = false
   @@error = false
 
@@ -54,6 +53,10 @@ module Output
     clear_screen
     puts 'Недостаточно денег для выполнения действия'.red
     @@error = true
+  end
+
+  def print_death_message
+    puts 'Ваш персонаж погиб, нажмите любую клавишу для продолжения...'.red
   end
 
   def clear_screen

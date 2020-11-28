@@ -8,6 +8,7 @@ class Valera
   def initialize(state)
     @config = JSON.parse(File.read('./config/action.json'))
     @boundaries = JSON.parse(File.read('./config/boundaries.json'))
+    @death_state = JSON.parse(File.read('./config/death_state.json'))
     @state = state
   end
 
@@ -55,7 +56,23 @@ class Valera
     change_fatigue(@config['sleep']['fatigue'])
   end
 
+  def death?
+    return true if death_state?(@state['health'], @death_state['health'])
+
+    return true if death_state?(@state['mana'], @death_state['mana'])
+
+    false
+  end
+
   private
+
+  def death_state?(stat_value, death_value)
+    if stat_value == death_value
+      @state['death'] = true
+      return true
+    end
+    false
+  end
 
   def alcohol_action_change(action)
     change_fun(@config[action]['fun'])
