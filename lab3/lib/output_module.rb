@@ -23,7 +23,7 @@ module Output
   def print_regulations
     File.open('./regulations.txt', 'r').each do |line|
       if line[0] == '['
-        puts line.chop.red
+        puts line.chop.yellow
       else
         puts line
       end
@@ -31,7 +31,7 @@ module Output
   end
 
   def print_choose_number
-    puts 'Выберите число от 1 до 9!'
+    puts 'Выберите число от 1 до 9!'.red
   end
 
   def print_stats(stats)
@@ -46,7 +46,13 @@ module Output
 
   def print_work_error
     clear_screen
-    puts 'Слишком много алкоголя или усталости, чтобы работать'
+    puts 'Слишком много алкоголя или усталости, чтобы работать'.red
+    @@error = true
+  end
+
+  def print_money_error
+    clear_screen
+    puts 'Недостаточно денег для выполнения действия'.red
     @@error = true
   end
 
