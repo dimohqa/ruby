@@ -8,6 +8,11 @@ class InputSave
     Valera.new(stats)
   end
 
+  def initial_config
+    stats = JSON.parse(File.read('./config/stats.json'))
+    Valera.new(stats)
+  end
+
   def init_valera(stats, valera)
     valera.health = stats['health']
     valera.money = stats['money']

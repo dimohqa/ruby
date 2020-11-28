@@ -13,13 +13,14 @@ class App
     @input_save = InputSave.new
   end
 
-
   def main
     print_menu
     input_item_menu = gets.to_i
     case input_item_menu
     when 1
-
+      valera = @input_save.initial_config
+      @output_save.save(valera.stat)
+      @game.start(valera)
     when 2
       valera = @input_save.read
       @game.start(valera)
