@@ -12,10 +12,6 @@ class Valera
     @state = state
   end
 
-  def stat
-    @state
-  end
-
   def work
     if @state['mana'] >= 50 || @state['fatigue'] >= 10
       set_work_error

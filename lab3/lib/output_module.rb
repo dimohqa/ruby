@@ -32,8 +32,8 @@ module Output
     end
   end
 
-  def print_choose_number
-    puts 'Выберите число от 1 до 9!'.red
+  def print_choose_number(start, finish)
+    puts "Выберите число от #{start} до #{finish}!".red
   end
 
   def print_stats(stats)
@@ -62,7 +62,7 @@ module Output
 
   def print_message
     clear_screen
-    puts @message.red
+    puts @message
     set_void_message
   end
 

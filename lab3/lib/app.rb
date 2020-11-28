@@ -7,28 +7,36 @@ require './output_module'
 class App
   include Output
 
-  def initialize
-    @game = Game.new
-  end
-
   def main
     print_menu
     input_item_menu = gets.to_i
     case input_item_menu
     when 1
-      valera = InputSave.initial_config
-      save_name = OutputSave.enter_save_name
-      @game.start(valera, save_name)
+      new_game
     when 2
-      save_name = InputSave.select_save
-      valera = InputSave.read(save_name)
-      @game.start(valera, save_name)
+      continue_game
     when 3
       clear_screen
       exit
+    else
+      print_choose_number(1, 3)
     end
 
     input_item_menu
+  end
+
+  def new_game
+    valera = InputSave.initial_config
+    save_name = OutputSave.enter_save_name
+    game = Game.new(valera)
+    game.start(save_name)
+  end
+
+  def continue_game
+    save_name = InputSave.select_save
+    valera = InputSave.read(save_name)
+    game = Game.new(valera)
+    game.start(save_name)
   end
 
   def start
