@@ -5,23 +5,18 @@ require './output_save'
 class Game
   include Output
 
-  def enter_action(valera, action)
-    case action
-    when 1
-      valera.work
-    when 2
-      valera.nature
-    when 3
-      valera.alcohol_action('vine_serial')
-    when 4
-      valera.alcohol_action('bar')
-    when 5
-      valera.alcohol_action('drink')
-    when 6
-      valera.song
-    when 7
-      valera.sleep
-    end
+  @actions = {
+    1 => ->(valera) { valera.work },
+    2 => ->(valera) { valera.nature },
+    3 => ->(valera) { valera.alcohol_action('vine_serial') },
+    4 => ->(valera) { valera.alcohol_action('bar') },
+    5 => ->(valera) { valera.alcohol_action('drink') },
+    6 => ->(valera) { valera.song },
+    7 => ->(valera) { valera.sleep }
+  }
+
+  class << self
+    attr_reader :actions
   end
 
   def select_regulation
@@ -48,7 +43,7 @@ class Game
       else
         OutputSave.save(valera.stat, save_name)
         action = select_regulation
-        enter_action(valera, action)
+        Game.actions[action].call(valera)
       end
       break if action == 9
     end

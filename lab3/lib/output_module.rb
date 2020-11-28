@@ -3,13 +3,13 @@ require './constants/string_constant'
 
 module Output
   def initialize
-    @@welcome = false
-    @@message = VOID_MESSAGE
+    @welcome = false
+    @message = VOID_MESSAGE
   end
 
   def print_menu
-    clear_screen unless @@welcome
-    @@welcome = false
+    clear_screen unless @welcome
+    @welcome = false
     puts 'Меню:'
     puts '1 - Начать новую игру'
     puts '2 - Продолжить игру'
@@ -19,7 +19,7 @@ module Output
   def print_welcome
     clear_screen
     puts 'Добро пожаловать в игру!'
-    @@welcome = true
+    @welcome = true
   end
 
   def print_regulations
@@ -45,24 +45,24 @@ module Output
   end
 
   def set_void_message
-    @@message = VOID_MESSAGE
+    @message = VOID_MESSAGE
   end
 
   def set_work_error
-    @@message = WORK_ERROR
+    @message = WORK_ERROR
   end
 
   def set_money_error
-    @@message = MONEY_ERROR
+    @message = MONEY_ERROR
   end
 
   def set_death_message
-    @@message = DEATH_MESSAGE
+    @message = DEATH_MESSAGE
   end
 
   def print_message
     clear_screen
-    puts @@message.red
+    puts @message.red
     set_void_message
   end
 
