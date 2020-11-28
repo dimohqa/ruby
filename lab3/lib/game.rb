@@ -11,11 +11,11 @@ class Game
     when 2
       valera.nature
     when 3
-      valera.vine_serial
+      valera.alcohol_action('vine_serial')
     when 4
-      valera.bar
+      valera.alcohol_action('bar')
     when 5
-      valera.drink
+      valera.alcohol_action('drink')
     when 6
       valera.song
     when 7
@@ -25,8 +25,8 @@ class Game
 
   def select_regulation
     number_action = 0
+    print_regulations
     loop do
-      print_regulations
       number_action = gets.to_i
       break if number_action.positive? && number_action < 10
 

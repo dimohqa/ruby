@@ -33,20 +33,8 @@ class Valera
     change_fatigue(@config['nature']['fatigue'])
   end
 
-  def vine_serial
-    change_fun(@config['vine_serial']['fun'])
-    change_mana(@config['vine_serial']['mana'])
-    change_fatigue(@config['vine_serial']['fatigue'])
-    change_health(@config['vine_serial']['health'])
-    change_money(@config['vine_serial']['money'])
-  end
-
-  def drink
-    change_fun(@config['drink']['fun'])
-    change_health(@config['drink']['health'])
-    change_mana(@config['drink']['mana'])
-    change_fatigue(@config['drink']['fatigue'])
-    change_money(@config['drink']['money'])
+  def alcohol_action(action)
+    alcohol_action_change(action) if enough_money?(@config[action]['money'])
   end
 
   def song
@@ -67,15 +55,24 @@ class Valera
     change_fatigue(@config['sleep']['fatigue'])
   end
 
-  def bar
-    change_fun(@config['bar']['fun'])
-    change_mana(@config['bar']['mana'])
-    change_fatigue(@config['bar']['fatigue'])
-    change_health(@config['bar']['health'])
-    change_money(@config['bar']['money'])
+  private
+
+  def alcohol_action_change(action)
+    change_fun(@config[action]['fun'])
+    change_mana(@config[action]['mana'])
+    change_fatigue(@config[action]['fatigue'])
+    change_health(@config[action]['health'])
+    change_money(@config[action]['money'])
   end
 
-  private
+  def enough_money?(cost)
+    if @state['money'] <= -cost
+      print_money_error
+      false
+    else
+      true
+    end
+  end
 
   def reference_values(value)
     @state[value] = @boundaries[value]['min'] if @state[value] < @boundaries[value]['min']
