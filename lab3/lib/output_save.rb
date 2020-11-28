@@ -1,13 +1,15 @@
 require 'json'
 
 class OutputSave
-  def save(stat)
+  def self.save(stat, save_name)
     File.open("./../saves/#{save_name}.json", 'w') do |f|
       f.write(JSON.pretty_generate(stat))
     end
   end
 
-  def save_name
+  def self.enter_save_name
+    save_name = ''
+
     loop do
       puts 'Введите название сохранения:'
       save_name = gets.chomp
@@ -15,9 +17,11 @@ class OutputSave
 
       puts "Сохранение с именем #{save_name} уже существует!"
     end
+
+    save_name
   end
 
-  def save_names
+  def self.save_names
     saves = Dir.entries('./../saves/').reject { |f| File.directory? f }
     saves.map! { |filename| filename.split('.')[0] }
   end

@@ -1,5 +1,6 @@
 require './valera'
 require './output_module'
+require './output_save'
 
 class Game
   include Output
@@ -35,11 +36,12 @@ class Game
     number_action
   end
 
-  def start(valera)
+  def start(valera, save_name)
     loop do
       print_stats(valera.state)
       action = select_regulation
       enter_action(valera, action)
+      OutputSave.save(valera.stat, save_name)
       break if action == 9
     end
   end
