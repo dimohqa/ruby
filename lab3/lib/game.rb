@@ -1,7 +1,9 @@
 require './valera'
-require 'colorize'
+require './output_module'
 
 class Game
+  include Output
+
   def enter_action(valera, action)
     case action
     when 1
@@ -21,12 +23,6 @@ class Game
     end
   end
 
-  def print_regulations
-    File.open('./regulations.txt', 'r').each do |line|
-      puts line
-    end
-  end
-
   def select_regulation
     number_action = 0
     loop do
@@ -34,25 +30,14 @@ class Game
       number_action = gets.to_i
       break if number_action.positive? && number_action < 10
 
-      puts 'Выберите число от 1 до 9!'
+      print_choose_number
     end
     number_action
   end
 
-  def print_regulations
-    File.open('./regulations.txt', 'r').each do |line|
-      if line[0] == '['
-        puts line.chop.red
-      else
-        puts line
-      end
-    end
-  end
-
   def start(valera)
     loop do
-      puts `clear`
-      valera.print_stat
+      print_stats(valera.state)
       action = select_regulation
       enter_action(valera, action)
       break if action == 9

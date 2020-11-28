@@ -1,8 +1,13 @@
+require './output_module'
+
 class Valera
-  attr_accessor :state
+  include Output
+
+  attr_accessor :state, :boundaries
 
   def initialize(state)
     @config = JSON.parse(File.read('./config/action.json'))
+    @boundaries = JSON.parse(File.read('./config/boundaries.json'))
     @state = state
   end
 
@@ -10,17 +15,9 @@ class Valera
     @state
   end
 
-  def print_stat
-    puts "health: #{@state['health']}"
-    puts "fun: #{@state['fun']}"
-    puts "fatigue: #{@state['fatigue']}"
-    puts "mana: #{@state['mana']}"
-    puts "money: #{@state['money']}"
-  end
-
   def work
-    if @state['mana'] < 50 && @state['fatigue'] < 10
-      puts 'Слишком много алкоголя и слишком мало усталости'
+    if @state['mana'] >= 50 || @state['fatigue'] >= 10
+      print_work_error
       return
     end
 
@@ -78,20 +75,31 @@ class Valera
     change_money(@config['bar']['money'])
   end
 
+  private
+
+  def reference_values(value)
+    @state[value] = @boundaries[value]['min'] if @state[value] < @boundaries[value]['min']
+    @state[value] = @boundaries[value]['max'] if @state[value] > @boundaries[value]['max']
+  end
+
   def change_mana(step)
     @state['mana'] += step
+    reference_values('mana')
   end
 
   def change_fun(step)
     @state['fun'] += step
+    reference_values('fun')
   end
 
   def change_health(step)
     @state['health'] += step
+    reference_values('health')
   end
 
   def change_fatigue(step)
     @state['fatigue'] += step
+    reference_values('fatigue')
   end
 
   def change_money(step)

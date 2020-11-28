@@ -2,19 +2,15 @@ require './valera'
 require './game'
 require './output_save'
 require './input_save'
+require './output_module'
 
 class App
+  include Output
+
   def initialize
     @game = Game.new
     @output_save = OutputSave.new
     @input_save = InputSave.new
-  end
-
-  def print_menu
-    puts 'Меню:'
-    puts '1 - Начать новую игру'
-    puts '2 - Продолжить игру'
-    puts '3 - выйти из игры'
   end
 
   def main
@@ -22,13 +18,14 @@ class App
     input_item_menu = gets.to_i
     case input_item_menu
     when 1
-      valera = @input_save.initialConfig
+      valera = @input_save.initial_config
       @output_save.save(valera.stat)
       @game.start(valera)
     when 2
       valera = @input_save.read
       @game.start(valera)
     when 3
+      clear_screen
       exit
     end
 
@@ -36,7 +33,7 @@ class App
   end
 
   def start
-    puts 'Добро пожаловать в игру!'
+    print_welcome
     loop do
       input_item_menu = main
       break if input_item_menu == 3
