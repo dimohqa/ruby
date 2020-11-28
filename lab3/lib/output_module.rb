@@ -1,5 +1,5 @@
 require 'colorize'
-require './string_constant'
+require './constants/string_constant'
 
 module Output
   def initialize
