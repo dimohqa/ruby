@@ -2,6 +2,8 @@ require 'colorize'
 require './constants/string_constant'
 
 class OutputInterface
+  attr_accessor :message
+
   def self.print_menu
     puts 'Меню:'
     puts '1 - Начать новую игру'
@@ -67,5 +69,9 @@ class OutputInterface
   def self.clear_screen
     system('cls')
     system('clear')
+  end
+
+  def self.get_message
+    @message
   end
 end
