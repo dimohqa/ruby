@@ -1,7 +1,7 @@
 require './output_interface'
 
 class Valera
-  attr_accessor :state, :boundaries
+  attr_accessor :state, :boundaries, :config
 
   def initialize(state, config, boundaries, death_state)
     @config = config
@@ -34,12 +34,12 @@ class Valera
 
   def song
     change_attribute('fun', @config['song']['fun'])
-    change_attribute('mana', @config['song']['mana'])
     if @state['mana'] > 40 && @state['mana'] < 70
       change_attribute('money', 60)
     else
       change_attribute('money', 10)
     end
+    change_attribute('mana', @config['song']['mana'])
     change_attribute('fatigue', @config['song']['fatigue'])
   end
 
