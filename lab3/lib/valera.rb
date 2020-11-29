@@ -5,10 +5,10 @@ class Valera
 
   attr_accessor :state, :boundaries
 
-  def initialize(state)
-    @config = JSON.parse(File.read('./config/action.json'))
-    @boundaries = JSON.parse(File.read('./config/boundaries.json'))
-    @death_state = JSON.parse(File.read('./config/death_state.json'))
+  def initialize(state, config, boundaries, death_state)
+    @config = config
+    @boundaries = boundaries
+    @death_state = death_state
     @state = state
   end
 
@@ -18,16 +18,16 @@ class Valera
       return
     end
 
-    change_fun(@config['work']['fun'])
-    change_mana(@config['work']['mana'])
-    change_money(@config['work']['money'])
-    change_fatigue(@config['work']['fatigue'])
+    change_attribute('fun', @config['work']['fun'])
+    change_attribute('mana', @config['work']['mana'])
+    change_attribute('money', @config['work']['money'])
+    change_attribute('fatigue', @config['work']['fatigue'])
   end
 
   def nature
-    change_fun(@config['nature']['fun'])
-    change_mana(@config['nature']['mana'])
-    change_fatigue(@config['nature']['fatigue'])
+    change_attribute('fun', @config['nature']['fun'])
+    change_attribute('mana', @config['nature']['mana'])
+    change_attribute('fatigue', @config['nature']['fatigue'])
   end
 
   def alcohol_action(action)
@@ -35,21 +35,21 @@ class Valera
   end
 
   def song
-    change_fun(@config['song']['fun'])
-    change_mana(@config['song']['mana'])
+    change_attribute('fun', @config['song']['fun'])
+    change_attribute('mana', @config['song']['mana'])
     if @state['mana'] > 40 && @state['mana'] < 70
-      change_money(60)
+      change_attribute('money', 60)
     else
-      change_money(10)
+      change_attribute('money', 10)
     end
-    change_fatigue(@config['song']['fatigue'])
+    change_attribute('fatigue', @config['song']['fatigue'])
   end
 
   def sleep
-    change_health(@config['sleep']['health']) if @state['mana'] < 30
-    change_fun(@config['sleep']['fun']) if @state['mana'] > 70
-    change_mana(@config['sleep']['mana'])
-    change_fatigue(@config['sleep']['fatigue'])
+    change_attribute('health', @config['sleep']['health']) if @state['mana'] < 30
+    change_attribute('fun', @config['sleep']['fun']) if @state['mana'] > 70
+    change_attribute('mana', @config['sleep']['mana'])
+    change_attribute('fatigue', @config['sleep']['fatigue'])
   end
 
   def death?
@@ -60,8 +60,6 @@ class Valera
     false
   end
 
-  private
-
   def death_state?(stat_value, death_value)
     if stat_value == death_value
       @state['death'] = true
@@ -71,11 +69,11 @@ class Valera
   end
 
   def alcohol_action_change(action)
-    change_fun(@config[action]['fun'])
-    change_mana(@config[action]['mana'])
-    change_fatigue(@config[action]['fatigue'])
-    change_health(@config[action]['health'])
-    change_money(@config[action]['money'])
+    change_attribute('fun', @config[action]['fun'])
+    change_attribute('mana', @config[action]['mana'])
+    change_attribute('fatigue', @config[action]['fatigue'])
+    change_attribute('health', @config[action]['health'])
+    change_attribute('money', @config[action]['money'])
   end
 
   def enough_money?(cost)
@@ -87,32 +85,13 @@ class Valera
     end
   end
 
-  def reference_values(value)
-    @state[value] = @boundaries[value]['min'] if @state[value] < @boundaries[value]['min']
-    @state[value] = @boundaries[value]['max'] if @state[value] > @boundaries[value]['max']
+  def reference_values(attribute)
+    @state[attribute] = @boundaries[attribute]['min'] if @state[attribute] < @boundaries[attribute]['min']
+    @state[attribute] = @boundaries[attribute]['max'] if @state[attribute] > @boundaries[attribute]['max']
   end
 
-  def change_mana(step)
-    @state['mana'] += step
-    reference_values('mana')
-  end
-
-  def change_fun(step)
-    @state['fun'] += step
-    reference_values('fun')
-  end
-
-  def change_health(step)
-    @state['health'] += step
-    reference_values('health')
-  end
-
-  def change_fatigue(step)
-    @state['fatigue'] += step
-    reference_values('fatigue')
-  end
-
-  def change_money(step)
-    @state['money'] += step
+  def change_attribute(attribute, step)
+    @state[attribute] += step
+    reference_values(attribute)
   end
 end
