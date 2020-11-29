@@ -1,15 +1,28 @@
-require './valera'
-
 class InputSave
   def self.read(save_name)
-    file = File.read("./../saves/#{save_name}.json")
-    stats = JSON.parse(file)
-    Valera.new(stats)
+    filepath = saves_filepath(save_name)
+    file = File.read(filepath)
+    JSON.parse(file)
+  end
+
+  def self.saves_filepath(save_name)
+    File.join(Dir.pwd, '..', 'saves', "#{save_name}.json")
+  end
+
+  def self.load_action_config(filename = './config/action.json')
+    JSON.parse(File.read(filename))
+  end
+
+  def self.load_boundaries(filename = './config/boundaries.json')
+    JSON.parse(File.read(filename))
+  end
+
+  def self.load_death_state
+    JSON.parse(File.read('./config/death_state.json'))
   end
 
   def self.initial_config
-    stats = JSON.parse(File.read('./config/stats.json'))
-    Valera.new(stats)
+    JSON.parse(File.read('./config/stats.json'))
   end
 
   def self.select_save

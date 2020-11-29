@@ -26,7 +26,8 @@ class App
   end
 
   def new_game
-    valera = InputSave.initial_config
+    stats = InputSave.initial_config
+    valera = initial_valera(stats)
     save_name = OutputSave.enter_save_name
     game = Game.new(valera)
     game.start(save_name)
@@ -34,9 +35,17 @@ class App
 
   def continue_game
     save_name = InputSave.select_save
-    valera = InputSave.read(save_name)
+    stats = InputSave.read(save_name)
+    valera = initial_valera(stats)
     game = Game.new(valera)
     game.start(save_name)
+  end
+
+  def initial_valera(stats)
+    action_config = InputSave.load_action_config
+    boundaries = InputSave.load_boundaries
+    death_state = InputSave.load_death_state
+    Valera.new(stats, action_config, boundaries, death_state)
   end
 
   def start
