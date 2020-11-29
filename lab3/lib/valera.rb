@@ -29,9 +29,8 @@ class Valera
   end
 
   def alcohol_action(action)
-    return unless enough_money?(@config[action]['money'])
+    return OutputInterface.set_money_error unless enough_money?(@config[action]['money'])
 
-    OutputInterface.set_money_error
     alcohol_action_change(action)
   end
 
@@ -76,7 +75,7 @@ class Valera
   end
 
   def enough_money?(cost)
-    (@state['money'] - cost).positive?
+    (@state['money'] + cost).positive?
   end
 
   def reference_values(attribute)
