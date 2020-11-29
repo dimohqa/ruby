@@ -7,13 +7,13 @@ class OutputSave
     end
   end
 
-  def self.enter_save_name
+  def self.enter_save_name(_filepath = './../saves/')
     save_name = ''
 
     loop do
       puts 'Введите название сохранения:'
       save_name = gets.chomp
-      break unless save_names.include? save_name
+      break unless save_exist(save_names, save_name)
 
       puts "Сохранение с именем #{save_name} уже существует!"
     end
@@ -21,8 +21,12 @@ class OutputSave
     save_name
   end
 
-  def self.save_names
-    saves = Dir.entries('./../saves/').reject { |f| File.directory? f }
+  def self.save_exist(saves, save)
+    saves.include? save
+  end
+
+  def self.save_names(filepath = './../saves/')
+    saves = Dir.entries(filepath).reject { |f| File.directory? f }
     saves.map! { |filename| filename.split('.')[0] }
   end
 end
