@@ -1,8 +1,6 @@
-require './output_module'
+require './output_interface'
 
 class Valera
-  include Output
-
   attr_accessor :state, :boundaries
 
   def initialize(state)
@@ -14,7 +12,7 @@ class Valera
 
   def work
     if @state['mana'] >= 50 || @state['fatigue'] >= 10
-      set_work_error
+      OutputInterface.set_work_error
       return
     end
 
@@ -80,7 +78,7 @@ class Valera
 
   def enough_money?(cost)
     if @state['money'] <= -cost
-      set_money_error
+      OutputInterface.set_money_error
       false
     else
       true
