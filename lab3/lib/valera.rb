@@ -70,7 +70,7 @@ class Valera
   end
 
   def alcohol_action_change(action)
-    @state.each do |attribute|
+    @config[action].each_key do |attribute|
       change_attribute(attribute, @config[action][attribute])
     end
   end
