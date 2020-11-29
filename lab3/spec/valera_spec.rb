@@ -86,7 +86,7 @@ RSpec.describe Valera do
   describe 'helpers' do
     it 'enough_money?' do
       expect(@valera.enough_money?(300)).to eq true
-      expect(@valera.enough_money?(1000)).to eq false
+      expect(@valera.enough_money?(-1000)).to eq false
     end
 
     it 'death_state?' do

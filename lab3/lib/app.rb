@@ -3,6 +3,7 @@ require './game'
 require './output_save'
 require './input_save'
 require './output_interface'
+require './constants/path_constants'
 
 class App
   def main
@@ -24,7 +25,7 @@ class App
   end
 
   def new_game
-    stats = InputSave.initial_config
+    stats = InputSave.load_json(STATS_JSON)
     valera = initial_valera(stats)
     save_name = OutputSave.enter_save_name
     game = Game.new(valera)
@@ -40,9 +41,9 @@ class App
   end
 
   def initial_valera(stats)
-    action_config = InputSave.load_action_config
-    boundaries = InputSave.load_boundaries
-    death_state = InputSave.load_death_state
+    action_config = InputSave.load_json(ACTION_JSON)
+    boundaries = InputSave.load_json(BOUNDARIES_JSON)
+    death_state = InputSave.load_json(DEATH_STATE_JSON)
     Valera.new(stats, action_config, boundaries, death_state)
   end
 
