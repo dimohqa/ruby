@@ -2,13 +2,11 @@ require './valera'
 require './game'
 require './output_save'
 require './input_save'
-require './output_module'
+require './output_interface'
 
 class App
-  include Output
-
   def main
-    print_menu
+    OutputInterface.print_menu
     input_item_menu = gets.to_i
     case input_item_menu
     when 1
@@ -16,7 +14,7 @@ class App
     when 2
       continue_game
     when 3
-      clear_screen
+      OutputInterface.clear_screen
       exit
     else
       print_choose_number(1, 3)
@@ -49,8 +47,10 @@ class App
   end
 
   def start
-    print_welcome
-    loop do
+    OutputInterface.clear_screen
+    OutputInterface.print_welcome
+    loop do |i|
+      OutputInterface.clear_screen if i != 0
       input_item_menu = main
       break if input_item_menu == 3
     end

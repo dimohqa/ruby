@@ -1,10 +1,8 @@
 require './valera'
-require './output_module'
+require './output_interface'
 require './output_save'
 
 class Game
-  include Output
-
   def initialize(valera)
     @valera = valera
   end
@@ -25,24 +23,26 @@ class Game
 
   def select_regulation
     number_action = 0
-    print_regulations
+    OutputInterface.print_regulations
     loop do
       number_action = gets.to_i
       break if number_action.positive? && number_action < 10
 
-      print_choose_number(1, 8)
+      OutputInterface.print_choose_number(1, 8)
     end
     number_action
   end
 
   def start(save_name)
     loop do
-      puts @valera.state
+      OutputInterface.clear_screen
+      OutputInterface.print_cap(@valera.state)
       OutputSave.save(@valera.state, save_name)
       action = select_regulation
       break if action == 8
 
       Game.actions[action].call(@valera)
+      OutputInterface.set_death_message if @valera.death?
     end
   end
 end
