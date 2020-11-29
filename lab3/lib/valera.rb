@@ -29,7 +29,10 @@ class Valera
   end
 
   def alcohol_action(action)
-    alcohol_action_change(action) if enough_money?(@config[action]['money'])
+    return unless enough_money?(@config[action]['money'])
+
+    OutputInterface.set_money_error
+    alcohol_action_change(action)
   end
 
   def song
@@ -67,20 +70,13 @@ class Valera
   end
 
   def alcohol_action_change(action)
-    change_attribute('fun', @config[action]['fun'])
-    change_attribute('mana', @config[action]['mana'])
-    change_attribute('fatigue', @config[action]['fatigue'])
-    change_attribute('health', @config[action]['health'])
-    change_attribute('money', @config[action]['money'])
+    @state.each do |attribute|
+      change_attribute(attribute, @config[action][attribute])
+    end
   end
 
   def enough_money?(cost)
-    if @state['money'] <= -cost
-      OutputInterface.set_money_error
-      false
-    else
-      true
-    end
+    (@state['money'] - cost).positive?
   end
 
   def reference_values(attribute)

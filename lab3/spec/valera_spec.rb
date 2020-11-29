@@ -92,5 +92,28 @@ RSpec.describe Valera do
       expect(@valera.state['fatigue']).to eq 0
       expect(@valera.state['health']).to eq 50
     end
+
+    it 'enough_money?' do
+      expect(@valera.enough_money?(300)).to eq true
+      expect(@valera.enough_money?(1000)).to eq false
+    end
+
+    it 'death_state?' do
+      expect(@valera.death_state?(10, 10)).to eq true
+      expect(@valera.death_state?(10, 11)).to eq false
+    end
+
+    it 'death?' do
+      expect(@valera.death?).to eq false
+      @valera.state['health'] = 0
+      expect(@valera.death?).to eq true
+      @valera.state['health'] = 100
+      @valera.state['mana'] = 100
+      expect(@valera.death?).to eq true
+    end
+
+    it 'alcohol_action_change' do
+      @valera.alcohol_action_change('bar')
+    end
   end
 end
