@@ -1,7 +1,6 @@
 require './valera'
 require './output_interface'
 require './output_save'
-require './nature'
 
 class Game
   def initialize(valera)
