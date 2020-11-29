@@ -16,16 +16,15 @@ class Valera
       return
     end
 
-    change_attribute('fun', @config['work']['fun'])
-    change_attribute('mana', @config['work']['mana'])
-    change_attribute('money', @config['work']['money'])
-    change_attribute('fatigue', @config['work']['fatigue'])
+    @config['work'].each do |attribute, value|
+      change_attribute(attribute, value)
+    end
   end
 
   def nature
-    change_attribute('fun', @config['nature']['fun'])
-    change_attribute('mana', @config['nature']['mana'])
-    change_attribute('fatigue', @config['nature']['fatigue'])
+    @config['nature'].each do |attribute, value|
+      change_attribute(attribute, value)
+    end
   end
 
   def alcohol_action(action)

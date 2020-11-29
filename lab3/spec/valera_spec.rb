@@ -41,6 +41,9 @@ RSpec.describe Valera do
       expect(@valera.state['money']).to eq 700
       expect(@valera.state['fatigue']).to eq 75
       expect(@valera.state['health']).to eq 50
+      @valera.state['mana'] = 60
+      @valera.work
+      expect(@valera.state['fun']).to eq 0
     end
 
     it 'nature' do
@@ -56,6 +59,9 @@ RSpec.describe Valera do
       expect(@valera.state['mana']).to eq 50
       expect(@valera.state['money']).to eq 610
       expect(@valera.state['fatigue']).to eq 25
+      @valera.state['mana'] = 50
+      @valera.song
+      expect(@valera.state['money']).to eq 670
     end
 
     it 'vine_serial' do
