@@ -28,11 +28,11 @@ class OutputInterface
   end
 
   def self.print_stats(stats)
-    puts "health: #{stats['health']}"
-    puts "fun: #{stats['fun']}"
-    puts "fatigue: #{stats['fatigue']}"
-    puts "mana: #{stats['mana']}"
-    puts "money: #{stats['money']}"
+    puts "Здоровье: #{stats['health']}"
+    puts "Счастье: #{stats['fun']}"
+    puts "Усталость: #{stats['fatigue']}"
+    puts "Опьянение: #{stats['mana']}"
+    puts "Деньги: #{stats['money']}"
   end
 
   def self.set_void_message
@@ -61,6 +61,7 @@ class OutputInterface
     print_message
     print_stats(stats)
     set_void_message
+    puts
   end
 
   def self.clear_screen

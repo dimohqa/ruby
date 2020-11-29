@@ -34,16 +34,23 @@ class Game
     number_action
   end
 
+  def the_end
+    OutputInterface.set_death_message
+    OutputInterface.print_cap(@valera.state)
+    gets
+  end
+
   def start(save_name)
     loop do
       OutputInterface.clear_screen
+      break the_end if @valera.death?
+
       OutputInterface.print_cap(@valera.state)
       OutputSave.save(@valera.state, save_name)
       action = select_regulation
       break if action == 8
 
       Game.actions[action].call(@valera)
-      OutputInterface.set_death_message if @valera.death?
     end
   end
 end
