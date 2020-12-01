@@ -119,7 +119,7 @@ RSpec.describe OutputInterface do
       expect($stdout.gets.strip).to eq("Усталость: #{state['fatigue']}")
       expect($stdout.gets.strip).to eq("Опьянение: #{state['mana']}")
       expect($stdout.gets.strip).to eq("Деньги: #{state['money']}")
-      expect($stdout.gets.strip).to eq("")
+      expect($stdout.gets.strip).to eq('')
     end
   end
 end
