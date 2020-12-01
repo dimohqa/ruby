@@ -17,8 +17,8 @@ class OutputInterface
     puts 'Добро пожаловать в игру!'
   end
 
-  def self.print_regulations
-    File.open('./regulations.txt', 'r').each do |line|
+  def self.print_regulations(filepath = './regulations.txt')
+    File.open(filepath, 'r').each do |line|
       if line[0] == '['
         puts line.chop.yellow
       else
