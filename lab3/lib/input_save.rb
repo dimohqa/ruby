@@ -1,5 +1,7 @@
+require './constants/path_constants'
+
 class InputSave
-  def self.read(save_name, filepath = './../saves/')
+  def self.read(save_name, filepath = SAVES)
     JSON.parse(File.read("#{filepath}#{save_name}.json"))
   end
 
@@ -7,7 +9,7 @@ class InputSave
     JSON.parse(File.read(filename))
   end
 
-  def self.select_save(filepath = './../saves/')
+  def self.select_save(filepath = SAVES)
     puts 'Список сохраненных игр:'
     puts save_names
 
@@ -29,7 +31,7 @@ class InputSave
     saves.include? save
   end
 
-  def self.save_names(filepath = './../saves/')
+  def self.save_names(filepath = SAVES)
     saves = Dir.entries(filepath).reject { |f| File.directory? f }
     saves.map! { |filename| filename.split('.')[0] }
   end
