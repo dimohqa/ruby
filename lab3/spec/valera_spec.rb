@@ -165,7 +165,7 @@ RSpec.describe Valera do
       @valera.change_attribute('mana', 50)
       expect(@valera.state['mana']).to eq 90
     end
-    
+
     it 'change_attribute health' do
       @valera.change_attribute('health', 50)
       expect(@valera.state['health']).to eq 100
