@@ -18,106 +18,170 @@ RSpec.describe Valera do
 
   describe 'actions' do
     it 'work' do
+      state = {
+        'mana' => 10,
+        'fun' => 0,
+        'money' => 700,
+        'fatigue' => 75,
+        'health' => 50,
+        'death' => false
+      }
       @valera.work
-      expect(@valera.state['mana']).to eq 10
-      expect(@valera.state['fun']).to eq 0
-      expect(@valera.state['money']).to eq 700
-      expect(@valera.state['fatigue']).to eq 75
-      expect(@valera.state['health']).to eq 50
+      expect(@valera.state).to eq state
+    end
+
+    it 'should correct if in work' do
       @valera.state['mana'] = 60
+      @valera.state['fatigue'] = 10
       @valera.work
-      expect(@valera.state['fun']).to eq 0
+      expect(@valera.state['fun']).to eq 5
     end
 
     it 'nature' do
+      state = {
+        'mana' => 30,
+        'fun' => 6,
+        'money' => 600,
+        'fatigue' => 15,
+        'health' => 50,
+        'death' => false
+      }
       @valera.nature
-      expect(@valera.state['mana']).to eq 30
-      expect(@valera.state['fun']).to eq 6
-      expect(@valera.state['fatigue']).to eq 15
+      expect(@valera.state).to eq state
     end
 
     it 'song' do
+      state = {
+        'mana' => 50,
+        'fun' => 6,
+        'money' => 610,
+        'fatigue' => 25,
+        'health' => 50,
+        'death' => false
+      }
       @valera.song
-      expect(@valera.state['fun']).to eq 6
-      expect(@valera.state['mana']).to eq 50
-      expect(@valera.state['money']).to eq 610
-      expect(@valera.state['fatigue']).to eq 25
+      expect(@valera.state).to eq state
+    end
+
+    it 'should correct if in song' do
       @valera.state['mana'] = 50
       @valera.song
-      expect(@valera.state['money']).to eq 670
+      expect(@valera.state['money']).to eq 660
     end
 
     it 'vine_serial' do
+      state = {
+        'mana' => 70,
+        'fun' => 4,
+        'money' => 580,
+        'fatigue' => 15,
+        'health' => 45,
+        'death' => false
+      }
       @valera.alcohol_action('vine_serial')
-      expect(@valera.state['fun']).to eq 4
-      expect(@valera.state['mana']).to eq 70
-      expect(@valera.state['money']).to eq 580
-      expect(@valera.state['fatigue']).to eq 15
+      expect(@valera.state).to eq state
     end
 
     it 'bar' do
+      state = {
+        'mana' => 100,
+        'fun' => 6,
+        'money' => 500,
+        'fatigue' => 45,
+        'health' => 40,
+        'death' => false
+      }
       @valera.alcohol_action('bar')
-      expect(@valera.state['fun']).to eq 6
-      expect(@valera.state['mana']).to eq 100
-      expect(@valera.state['money']).to eq 500
-      expect(@valera.state['fatigue']).to eq 45
-      expect(@valera.state['health']).to eq 40
+      expect(@valera.state).to eq state
     end
 
     it 'drink' do
+      state = {
+        'mana' => 100,
+        'fun' => 10,
+        'money' => 450,
+        'fatigue' => 85,
+        'health' => 0,
+        'death' => false
+      }
       @valera.alcohol_action('drink')
-      expect(@valera.state['fun']).to eq 10
-      expect(@valera.state['mana']).to eq 100
-      expect(@valera.state['money']).to eq 450
-      expect(@valera.state['fatigue']).to eq 85
-      expect(@valera.state['health']).to eq 0
+      expect(@valera.state).to eq state
     end
 
     it 'sleep' do
+      state = {
+        'mana' => 0,
+        'fun' => 5,
+        'money' => 600,
+        'fatigue' => 0,
+        'health' => 50,
+        'death' => false
+      }
       @valera.sleep
-      expect(@valera.state['fun']).to eq 5
-      expect(@valera.state['mana']).to eq 0
-      expect(@valera.state['money']).to eq 600
-      expect(@valera.state['fatigue']).to eq 0
-      expect(@valera.state['health']).to eq 50
+      expect(@valera.state).to eq state
     end
   end
 
   describe 'helpers' do
-    it 'enough_money?' do
+    it 'should return enough_money? positive result' do
       expect(@valera.enough_money?(300)).to eq true
+    end
+
+    it 'should return enough_money? negative result' do
       expect(@valera.enough_money?(-1000)).to eq false
     end
 
-    it 'death_state?' do
+    it 'should return death_state? positive result' do
       expect(@valera.death_state?(10, 10)).to eq true
+    end
+
+    it 'should return death_state? negative result' do
       expect(@valera.death_state?(10, 11)).to eq false
     end
 
-    it 'death?' do
-      expect(@valera.death?).to eq false
+    it 'should return death? positive result with mana' do
+      @valera.state['mana'] = 100
+      expect(@valera.death?).to eq true
+    end
+
+    it 'should return death? positive result with health' do
       @valera.state['health'] = 0
       expect(@valera.death?).to eq true
+    end
+
+    it 'should return death? positive result with health and mana' do
       @valera.state['health'] = 100
       @valera.state['mana'] = 100
       expect(@valera.death?).to eq true
     end
+
+    it 'should return death? negative result' do
+      expect(@valera.death?).to eq false
+    end
   end
 
   describe 'attribute' do
-    it 'change_attribute' do
+    it 'change_attribute mana' do
       @valera.change_attribute('mana', 50)
       expect(@valera.state['mana']).to eq 90
-
+    end
+    
+    it 'change_attribute health' do
       @valera.change_attribute('health', 50)
       expect(@valera.state['health']).to eq 100
+    end
 
+    it 'change_attribute fun' do
       @valera.change_attribute('fun', 50)
       expect(@valera.state['fun']).to eq 10
+    end
 
+    it 'change_attribute money' do
       @valera.change_attribute('money', 50)
       expect(@valera.state['money']).to eq 650
+    end
 
+    it 'change_attribute fatigue' do
       @valera.change_attribute('fatigue', 50)
       expect(@valera.state['fatigue']).to eq 55
     end
